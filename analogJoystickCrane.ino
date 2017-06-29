@@ -69,28 +69,28 @@ void loop() {
     case moving:
       if (analogRead(trollyInput) <= 550 && analogRead(trollyInput) >= 450 && digitalRead(trollyOutBtn) == HIGH && digitalRead(trollyInBtn) == HIGH) 
       {
-        digitalWrite(trollyOutput, analogRead(trollyInput);
+        analogWrite(trollyOutput, analogRead(trollyInput);
         state = trollyStopped;
        }
         else if (analogRead(trollyInput) >= 550 && digitalRead(trollyOutBtn) == HIGH && digitalRead(trollyInBtn == HIGH)) 
        {
-        digitalWrite(trollyOutput, analogRead(trollyInput);
+        analogWrite(trollyOutput, analogRead(trollyInput);
         state = moving;
        }
         else if ((analogRead(trollyInput) <= 450 && digitalRead(trollyOutBtn) == HIGH && digitalRead(trollyInBtn == HIGH)) 
        {
-        digitalWrite(trollyOutput, analogRead(trollyInput));
+        analogWrite(trollyOutput, analogRead(trollyInput));
         state = moving;
        }
         else if ((digitalRead(trollyOutBtn) == LOW)
       {
-        digitalWrite(trollyOutput, 350);
+        analogWrite(trollyOutput, 350);
         state = stoppedOut;
         timeStopped = now;
       }
         else if ((digitalRead(trollyInBtn) == LOW)
       {
-        digitalWrite(trollyOutput, 650);
+        analogWrite(trollyOutput, 650);
         state = stoppedIn;
         timeStopped = now;
       }
@@ -98,14 +98,14 @@ void loop() {
     case stoppedOut:
       if (now - timeStopped >= 3000 && analogRead(trollyInput) <= 450)
       {
-        digitalWrite(trollyOutput, analogRead(trollyInput);
+        analogWrite(trollyOutput, analogRead(trollyInput);
         state moving;
       }
       break;
       case stoppedIn:
       if (now - timeStopped >= 3000 && analogRead(trollyInput) >= 550)
       {
-        digitalWrite(trollyOutput, analogRead(trollyInput);
+        analogWrite(trollyOutput, analogRead(trollyInput);
         state moving;
       }
       break;
