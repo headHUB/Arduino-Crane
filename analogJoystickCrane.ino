@@ -4,6 +4,7 @@
 #define trollyInBtn 5
 #define led1 13
 #define led2 12
+int TrollyVal;
 
 void setup() {
   pinMode(trollyInput, INPUT);
@@ -23,7 +24,7 @@ void loop() {
   const int led1TimeInterval = 1000;
    
                //start led1
-   if (newLed1Time - led1Time >= led2TimeInterval) 
+   if (newLed1Time - led1Time >= led1TimeInterval) 
     {
       led1Time = newLed1Time;
       if (led1State == LOW) {
@@ -59,36 +60,38 @@ void loop() {
 //  digitalWrite(motorPin, 250);
 //  }
               // set trolly variables
-  trollyVal = (map(analogRead(trollyInput), 1, 1023, 0, 255);
-  static enum {moving, stoppedOut, stoppedIn, moving, trollyStopped} state;
-  //static unsigned long trollyStopped;
+  int trollyVal;
+  trollyVal = analogRead(trollyInput);
+  trollyVal = (map(analogRead(trollyInput), 1, 1023, 0, 255));
+  static enum {moving, stoppedOut, stoppedIn, trollyStopped} state;
+  static unsigned long timeStopped;
   const int autoPilot = 3000;
   unsigned long now = millis();
                
-  switch(trollyState) {
+  switch(state) {
     case moving:
       if (analogRead(trollyInput) <= 550 && analogRead(trollyInput) >= 450 && digitalRead(trollyOutBtn) == HIGH && digitalRead(trollyInBtn) == HIGH) 
       {
-        analogWrite(trollyOutput, analogRead(trollyInput);
+        analogWrite(trollyOutput, analogRead(trollyInput));
         state = trollyStopped;
        }
         else if (analogRead(trollyInput) >= 550 && digitalRead(trollyOutBtn) == HIGH && digitalRead(trollyInBtn == HIGH)) 
        {
-        analogWrite(trollyOutput, analogRead(trollyInput);
+        analogWrite(trollyOutput, analogRead(trollyInput));
         state = moving;
        }
-        else if ((analogRead(trollyInput) <= 450 && digitalRead(trollyOutBtn) == HIGH && digitalRead(trollyInBtn == HIGH)) 
+        else if ((analogRead(trollyInput) <= 450 && digitalRead(trollyOutBtn) == HIGH && digitalRead(trollyInBtn == HIGH))) 
        {
         analogWrite(trollyOutput, analogRead(trollyInput));
         state = moving;
        }
-        else if ((digitalRead(trollyOutBtn) == LOW)
+        else if ((digitalRead(trollyOutBtn) == LOW))
       {
         analogWrite(trollyOutput, 350);
         state = stoppedOut;
         timeStopped = now;
       }
-        else if ((digitalRead(trollyInBtn) == LOW)
+        else if ((digitalRead(trollyInBtn) == LOW))
       {
         analogWrite(trollyOutput, 650);
         state = stoppedIn;
@@ -98,15 +101,15 @@ void loop() {
     case stoppedOut:
       if (now - timeStopped >= 3000 && analogRead(trollyInput) <= 450)
       {
-        analogWrite(trollyOutput, analogRead(trollyInput);
-        state moving;
+        analogWrite(trollyOutput, analogRead(trollyInput));
+        state = moving;
       }
       break;
       case stoppedIn:
       if (now - timeStopped >= 3000 && analogRead(trollyInput) >= 550)
       {
-        analogWrite(trollyOutput, analogRead(trollyInput);
-        state moving;
+        analogWrite(trollyOutput, analogRead(trollyInput));
+        state = moving;
       }
       break;
 
